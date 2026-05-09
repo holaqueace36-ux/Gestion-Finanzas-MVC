@@ -12,31 +12,12 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `gestion_finanzas`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categorias_personalizadas`
---
-
 CREATE TABLE `categorias_personalizadas` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `presupuesto_asignado` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `categorias_personalizadas`
---
 
 INSERT INTO `categorias_personalizadas` (`id`, `usuario_id`, `nombre`, `presupuesto_asignado`) VALUES
 (1, 1, 'transporte', 0.00),
@@ -52,12 +33,6 @@ INSERT INTO `categorias_personalizadas` (`id`, `usuario_id`, `nombre`, `presupue
 (14, 27, 'tyt', 600.00),
 (15, 27, 'comidi', 450.00);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `gastos`
---
-
 CREATE TABLE `gastos` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
@@ -65,10 +40,6 @@ CREATE TABLE `gastos` (
   `monto` decimal(10,2) DEFAULT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `gastos`
---
 
 INSERT INTO `gastos` (`id`, `usuario_id`, `descripcion`, `monto`, `fecha`) VALUES
 (1, 1, 'cancer', 10000.00, '2026-05-06 02:16:56'),
@@ -98,11 +69,6 @@ INSERT INTO `gastos` (`id`, `usuario_id`, `descripcion`, `monto`, `fecha`) VALUE
 (25, 27, 'eree', 123.00, '2026-05-07 03:15:02'),
 (26, 27, 'gup', 100.00, '2026-05-07 03:35:02');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `metas`
---
 
 CREATE TABLE `metas` (
   `id` int(11) NOT NULL,
@@ -111,10 +77,6 @@ CREATE TABLE `metas` (
   `monto_objetivo` decimal(10,2) DEFAULT NULL,
   `monto_actual` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `metas`
---
 
 INSERT INTO `metas` (`id`, `usuario_id`, `nombre_meta`, `monto_objetivo`, `monto_actual`) VALUES
 (1, 1, 'moto', 300.00, 0.00),
@@ -135,12 +97,6 @@ INSERT INTO `metas` (`id`, `usuario_id`, `nombre_meta`, `monto_objetivo`, `monto
 (35, 27, 'Meta', 30.00, 0.00),
 (36, 27, 'pito', 3500.00, 0.00);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `transacciones`
---
-
 CREATE TABLE `transacciones` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -149,10 +105,6 @@ CREATE TABLE `transacciones` (
   `tipo` enum('ingreso','gasto') DEFAULT NULL,
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `transacciones`
---
 
 INSERT INTO `transacciones` (`id`, `user_id`, `monto`, `categoria`, `tipo`, `fecha`) VALUES
 (19, 28, 50.00, 'pago', 'ingreso', '2026-05-05'),
@@ -199,12 +151,6 @@ INSERT INTO `transacciones` (`id`, `user_id`, `monto`, `categoria`, `tipo`, `fec
 (60, 27, 3.00, 'g', 'ingreso', '2026-05-06'),
 (61, 27, 123.00, 'guv', 'ingreso', '2026-05-06');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
@@ -213,10 +159,6 @@ CREATE TABLE `usuarios` (
   `rol` varchar(10) DEFAULT 'user',
   `estado` varchar(10) DEFAULT 'activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `estado`) VALUES
 (1, 'Admin Proyect', 'admin@test.com', '123456', 'admin', 'activo'),
@@ -227,104 +169,50 @@ INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `estado`) VA
 (30, 'carlos', 'carlos2@gmail.com', '12', 'user', 'activo'),
 (31, 'cachirri', 'cachi@gmail.com', '123', 'user', 'activo');
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `categorias_personalizadas`
---
 ALTER TABLE `categorias_personalizadas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
---
--- Indices de la tabla `gastos`
---
 ALTER TABLE `gastos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
---
--- Indices de la tabla `metas`
---
 ALTER TABLE `metas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
---
--- Indices de la tabla `transacciones`
---
 ALTER TABLE `transacciones`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
---
--- Indices de la tabla `usuarios`
---
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `categorias_personalizadas`
---
+  ADD UNIQUE KEY `email` (`email`),
+  
 ALTER TABLE `categorias_personalizadas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
---
--- AUTO_INCREMENT de la tabla `gastos`
---
 ALTER TABLE `gastos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
---
--- AUTO_INCREMENT de la tabla `metas`
---
 ALTER TABLE `metas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
---
--- AUTO_INCREMENT de la tabla `transacciones`
---
 ALTER TABLE `transacciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `categorias_personalizadas`
---
 ALTER TABLE `categorias_personalizadas`
   ADD CONSTRAINT `categorias_personalizadas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
---
--- Filtros para la tabla `gastos`
---
 ALTER TABLE `gastos`
   ADD CONSTRAINT `gastos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
---
--- Filtros para la tabla `metas`
---
 ALTER TABLE `metas`
   ADD CONSTRAINT `metas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
---
--- Filtros para la tabla `transacciones`
---
 ALTER TABLE `transacciones`
   ADD CONSTRAINT `transacciones_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`);
 COMMIT;

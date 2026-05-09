@@ -15,7 +15,7 @@ import {
 export default function Home() {
     const { usuario_id } = useLocalSearchParams();
     const router = useRouter();
-    // IP local de tu servidor XAMPP
+    
     const URL_API = 'http://192.168.1.2/API_FINANZAS/operaciones.php';
     
     const [datos, setDatos] = useState({
@@ -27,7 +27,7 @@ export default function Home() {
     });
     const [refreshing, setRefreshing] = useState(false);
 
-    // --- CONTROLADOR: Carga de datos unificada ---
+ 
     const cargarDatos = async () => {
         if (!usuario_id) return;
         try {
@@ -42,7 +42,7 @@ export default function Home() {
             setDatos({
                 nombre: resUser.data.nombre || 'Usuario',
                 saldo: Number(resSaldo.data.saldo) || 0,
-                movimientos: resMov.data.movimientos || [], // Ahora incluye ingresos y gastos
+                movimientos: resMov.data.movimientos || [], 
                 categorias: resCat.data.categorias || [], 
                 metas: resMetas.data.metas || []
             });
@@ -53,7 +53,7 @@ export default function Home() {
         }
     };
 
-    // --- NUEVA FUNCIÓN: Limpiar historial ---
+    
     const limpiarHistorial = () => {
         Alert.alert(
             "Limpiar Historial",
@@ -71,7 +71,7 @@ export default function Home() {
                             });
                             if (res.data.status === 'success') {
                                 Alert.alert("Éxito", "Historial borrado correctamente");
-                                cargarDatos(); // Recarga la vista para mostrar saldo en 0
+                                cargarDatos();
                             }
                         } catch (error) {
                             console.error("Error al limpiar:", error);
@@ -99,20 +99,20 @@ export default function Home() {
             contentContainerStyle={styles.scrollContent}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={cargarDatos} />}
         >
-            {/* ENCABEZADO */}
+          
             <View style={styles.header}>
                 <Text style={styles.welcomeText}>Panel de Gestión</Text>
                 <Text style={styles.userName}>{datos.nombre}</Text>
             </View>
 
-            {/* BALANCE TOTAL */}
+
             <View style={styles.balanceCard}>
                 <Text style={styles.balanceLabel}>SALDO TOTAL DISPONIBLE</Text>
                 <Text style={styles.balanceValue}>${datos.saldo.toLocaleString(undefined, { minimumFractionDigits: 2 })}</Text>
                 <Text style={styles.balanceSubtext}>Monitoreando {datos.categorias.length} categorías</Text>
             </View>
 
-            {/* ACCIONES */}
+  
             <View style={styles.actionContainer}>
                 <TouchableOpacity style={[styles.actionButton, {backgroundColor: '#2ecc71'}]} onPress={() => navegar('/ingreso')}>
                     <Text style={styles.actionText}>+ Ingreso</Text>
@@ -122,7 +122,7 @@ export default function Home() {
                 </TouchableOpacity>
             </View>
 
-            {/* SECCIÓN: METAS DE AHORRO */}
+   
             <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>Metas de Ahorro</Text>
                 <TouchableOpacity onPress={() => navegar('/metas')}><Text style={styles.linkText}>Ver todas</Text></TouchableOpacity>
@@ -136,7 +136,7 @@ export default function Home() {
                 ))}
             </ScrollView>
 
-            {/* SECCIÓN: CATEGORÍAS REGISTRADAS (Pills) */}
+
             <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>Categorías Registradas</Text>
                 <TouchableOpacity onPress={() => navegar('/categorias')}><Text style={styles.linkText}>Editar</Text></TouchableOpacity>
@@ -149,10 +149,9 @@ export default function Home() {
                 ))}
             </ScrollView>
 
-            {/* SECCIÓN: ÚLTIMOS MOVIMIENTOS (Ingresos y Gastos combinados) */}
             <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>Últimos Movimientos</Text>
-                {/* BOTÓN INTEGRADO: Limpiar Historial */}
+            
                 <TouchableOpacity onPress={limpiarHistorial}>
                     <Text style={styles.clearText}>Limpiar</Text>
                 </TouchableOpacity>
@@ -164,7 +163,7 @@ export default function Home() {
                             <Text style={styles.historyConcept}>{mov.concept || mov.concepto}</Text>
                             <Text style={styles.historyDate}>{mov.fecha}</Text>
                         </View>
-                        {/* El color cambia dinámicamente según el tipo de movimiento */}
+                      
                         <Text style={[
                             styles.historyAmount, 
                             { color: mov.tipo === 'ingreso' ? '#2ecc71' : '#e74c3c' }
@@ -175,7 +174,6 @@ export default function Home() {
                 ))}
             </View>
 
-            {/* BOTÓN CERRAR SESIÓN */}
             <Pressable onPress={cerrarSesion} style={styles.btnLogout}>
 
             </Pressable>

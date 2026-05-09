@@ -34,8 +34,7 @@ export default function Login() {
             });
 
             if (res.data.status === "success") {
-                
-                // --- NUEVA FUNCIÓN DE CONTROL DE ACCESO ---
+            
                 if (res.data.estado === 'inactivo') {
                     Alert.alert("Acceso Denegado", "Tu cuenta ha sido desactivada.");
                     setCargando(false);
@@ -45,14 +44,12 @@ export default function Login() {
                 if (res.data.rol === 'admin') {
                     router.replace('/admin_panel');
                 } else {
-                    // Tu lógica original para usuario normal
+                    
                     router.replace({
                         pathname: '/home',
                         params: { usuario_id: res.data.user_id }
                     });
                 }
-                // --- FIN DE LA NUEVA FUNCIÓN ---
-
             } else {
                 Alert.alert("Error", res.data.message || "Credenciales incorrectas.");
             }

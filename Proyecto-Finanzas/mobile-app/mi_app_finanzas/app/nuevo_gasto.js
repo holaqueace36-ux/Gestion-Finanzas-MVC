@@ -17,7 +17,7 @@ export default function NuevoGasto() {
     try {
       const res = await axios.post('http://192.168.1.2/API_FINANZAS/operaciones.php', {
         accion: 'registrar_gasto',
-        usuario_id: 1, // ID de prueba de tu tabla usuarios
+        usuario_id: 1, 
         descripcion: desc,
         monto: monto
       });

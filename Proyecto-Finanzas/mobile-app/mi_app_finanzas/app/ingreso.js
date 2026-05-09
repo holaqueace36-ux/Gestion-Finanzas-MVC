@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function Ingreso() {
-    const { usuario_id } = useLocalSearchParams(); // Recibe el ID desde el Home
+    const { usuario_id } = useLocalSearchParams(); 
     const [monto, setMonto] = useState('');
     const [categoria, setCategoria] = useState('');
     const router = useRouter();
@@ -25,7 +25,7 @@ export default function Ingreso() {
 
             if (res.data.status === "success") {
                 Alert.alert("Éxito", "Ingreso registrado");
-                router.back(); // Regresa al Home automáticamente
+                router.back(); 
             }
         } catch (e) {
             Alert.alert("Error", "No se pudo conectar con el servidor");

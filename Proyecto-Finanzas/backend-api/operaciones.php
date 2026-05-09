@@ -4,7 +4,6 @@ header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
 
-// Conexión a la base de datos gestion_finanzas
 $conn = new mysqli("localhost", "root", "", "gestion_finanzas");
 
 if ($conn->connect_error) {
@@ -15,9 +14,6 @@ $data = json_decode(file_get_contents("php://input"), true);
 $accion = $data['accion'] ?? '';
 
 switch ($accion) {
-    // ==========================================
-    // 1. AUTENTICACIÓN Y PERFIL
-    // ==========================================
     case 'login':
         $email = $conn->real_escape_string($data['email']);
         $pass = $conn->real_escape_string($data['password']);
@@ -36,10 +32,6 @@ switch ($accion) {
         $user = $res->fetch_assoc();
         echo json_encode(["status" => "success", "nombre" => $user['nombre'] ?? 'Usuario']);
         break;
-
-    // ==========================================
-    // 2. MOVIMIENTOS (ESTADO DE CUENTA)
-    // ==========================================
     case 'registrar_ingreso':
         $u_id = $conn->real_escape_string($data['usuario_id']);
         $monto = $conn->real_escape_string($data['monto']);
@@ -67,7 +59,6 @@ switch ($accion) {
 
     case 'obtener_movimientos':
         $u_id = $conn->real_escape_string($data['usuario_id']);
-        // CORRECCIÓN: Unión de tablas para mostrar ingresos y gastos combinados
         $sql = "(SELECT monto, categoria as concepto, fecha, 'ingreso' as tipo 
                  FROM transacciones 
                  WHERE user_id = '$u_id' AND tipo = 'ingreso')
@@ -82,10 +73,8 @@ switch ($accion) {
         echo json_encode(["status" => "success", "movimientos" => $movs]);
         break;
 
-    // NUEVA FUNCIÓN: Limpiar historial de movimientos
     case 'limpiar_historial':
         $u_id = $conn->real_escape_string($data['usuario_id']);
-        // Borra registros de ambas tablas para el usuario específico
         $sql1 = "DELETE FROM transacciones WHERE user_id = '$u_id'";
         $sql2 = "DELETE FROM gastos WHERE usuario_id = '$u_id'";
         
@@ -96,9 +85,6 @@ switch ($accion) {
         }
         break;
 
-    // ==========================================
-    // 3. CATEGORÍAS Y METAS
-    // ==========================================
     case 'registrar_categoria':
         $u_id = $conn->real_escape_string($data['usuario_id']);
         $nom = $conn->real_escape_string($data['nombre'] ?? 'Nueva');
@@ -118,7 +104,6 @@ switch ($accion) {
 
     case 'registrar_meta':
         $u_id = $conn->real_escape_string($data['usuario_id']);
-        // CORRECCIÓN: Captura el nombre enviado desde la app, evitando el nombre por defecto
         $nom = $conn->real_escape_string($data['nombre_meta'] ?? $data['nombre'] ?? 'Nueva Meta');
         $obj = $conn->real_escape_string($data['monto_objetivo'] ?? $data['monto'] ?? 0);
         $sql = "INSERT INTO metas (usuario_id, nombre_meta, monto_objetivo, monto_actual) 
@@ -134,10 +119,6 @@ switch ($accion) {
         echo json_encode(["status" => "success", "metas" => $metas]);
         break;
 
-    // ==========================================
-    // 4. PANEL ADMINISTRADOR
-    // ==========================================
-    case 'admin_listar_usuarios':
         $res = $conn->query("SELECT id, nombre, email, estado FROM usuarios WHERE rol != 'admin'");
         $users = [];
         while($row = $res->fetch_assoc()) { $users[] = $row; }

@@ -13,7 +13,7 @@ export default function LoginScreen() {
       const res = await axios.post(url, { email, password });
 
       if (res.data.message) {
-        router.replace('/home'); // Entra a la gestión de gastos
+        router.replace('/home');
       } else {
         Alert.alert("Error de acceso", res.data.error || "Usuario o clave incorrectos");
       }

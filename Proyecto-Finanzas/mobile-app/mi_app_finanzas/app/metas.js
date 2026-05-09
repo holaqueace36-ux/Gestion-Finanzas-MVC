@@ -18,8 +18,8 @@ export default function Metas() {
             const res = await axios.post('http://192.168.1.2/API_FINANZAS/operaciones.php', {
                 accion: 'registrar_meta',
                 usuario_id: usuario_id,
-                nombre: nombreMeta,        // Coincide con $data['nombre']
-                monto_objetivo: monto      // Coincide con $data['monto_objetivo']
+                nombre: nombreMeta,       
+                monto_objetivo: monto      
             });
 
             if (res.data.status === "success") {

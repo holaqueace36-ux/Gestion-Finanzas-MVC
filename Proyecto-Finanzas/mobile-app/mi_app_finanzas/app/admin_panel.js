@@ -8,7 +8,6 @@ export default function AdminPanel() {
     const [cargando, setCargando] = useState(true);
     const router = useRouter();
 
-    // TU IP YA INTEGRADA
     const API_URL = 'http://192.168.1.2/API_FINANZAS/operaciones.php';
 
     const cargarUsuarios = async () => {
@@ -35,7 +34,7 @@ export default function AdminPanel() {
                 nuevo_estado: nuevoEstado
             });
             if (res.data.status === "success") {
-                cargarUsuarios(); // Recargar la lista para ver el cambio
+                cargarUsuarios(); 
             }
         } catch (e) {
             Alert.alert("Error", "Error al cambiar estado");

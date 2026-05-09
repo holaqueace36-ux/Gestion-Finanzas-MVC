@@ -1,11 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2026 a las 06:07:14
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -217,6 +209,3 @@ ALTER TABLE `transacciones`
   ADD CONSTRAINT `transacciones_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

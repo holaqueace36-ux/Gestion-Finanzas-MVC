@@ -19,7 +19,7 @@ export default function Definir() {
       });
     } catch (e) { console.log("Error de red"); }
 
-    // Enviamos el monto como parámetro para que el Home lo reciba
+    // se nvia el monto como parámetro para que el Home lo reciba
     router.replace({
       pathname: '/home',
       params: { saldoRecibido: monto }

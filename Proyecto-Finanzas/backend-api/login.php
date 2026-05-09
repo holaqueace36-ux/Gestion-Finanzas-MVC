@@ -4,7 +4,6 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Conexión a la base de datos
 $conn = new mysqli("localhost", "root", "", "gestion_finanzas");
 
 if ($conn->connect_error) {
@@ -16,7 +15,6 @@ $data = json_decode(file_get_contents("php://input"), true);
 $email = $data['email'];
 $password = $data['password'];
 
-// Verificación de usuario
 $sql = "SELECT * FROM usuarios WHERE email = '$email' AND password = '$password'";
 $result = $conn->query($sql);
 
